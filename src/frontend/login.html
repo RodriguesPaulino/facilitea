@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>faciliTEA App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            background: linear-gradient(to right, #e0e0e0, #ffffff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            width: 400px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            width: 100%;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-4 offset-md-4">
+                <div class="text-center mb-4">
+                    <img src="img/logo.png" alt="Logo faciliTEA" class="logo">
+                    <h1 class="text-center">FaciliTEA</h1>
+                </div>
+                <div class="card p-4">
+                    
+                    <form id="form_login">
+                        <div class="form-group">
+                            <input type="text" id="login" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="form-group mt-3">
+                            <input type="password" id="password" class="form-control" placeholder="Senha" required>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <button type="submit" class="btn btn-primary btn-block">Acessar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        const form = document.querySelector('#form_login');
+        form.addEventListener('submit', async (evento) => {
+            evento.preventDefault();
+            const login = document.querySelector('#login').value;
+            const password = document.querySelector('#password').value;
+            try {
+                const response = await axios.post('http://localhost:3000/login', {
+                    login: login,
+                    senha: password
+                });
+                const token = response.data.token;
+                localStorage.setItem('token_fac', token);
+                alert("Usuário logado com sucesso");
+                location.href = '/painel.html';
+            } catch (e) {
+                alert(e);
+            }
+        });
+    </script>
+</body>
+</html>
